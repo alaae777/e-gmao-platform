@@ -1,0 +1,56 @@
+# ENVIRONMENT / SECRETS
+.env
+.env.*
+!.env.example
+
+# NODE / FRONTEND
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# PYTHON / DJANGO
+__pycache__/
+*.py[cod]
+*$py.class
+
+*.sqlite3
+
+.venv/
+venv/
+env/
+ENV/
+
+.pytest_cache/
+.coverage
+htmlcov/
+
+# DJANGO
+staticfiles/
+media/
+
+# IDE / EDITORS
+.vscode/*
+!.vscode/extensions.json
+
+.idea/
+.DS_Store
+
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# LOGS
+logs/
+*.log
+
+# OS
+Thumbs.db

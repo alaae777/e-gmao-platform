@@ -1,0 +1,166 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+:root {
+  font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color: #F4F6F9;
+  background-color: #0D1117;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #0D1117;
+  color: #F4F6F9;
+}
+
+.data-mono {
+  font-family: 'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;
+  font-feature-settings: "tnum";
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in-page {
+  animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.enterprise-card {
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease !important;
+  border: 1px solid #262D3A !important;
+  border-radius: 10px !important;
+  background-color: #151A23 !important;
+}
+
+.enterprise-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px -6px rgba(0, 0, 0, 0.55) !important;
+  border-color: #3A4356 !important;
+}
+
+/* Segmented progress indicator (module/chapter sequence) */
+.rail-divider {
+  height: 1px;
+  width: 100%;
+  background-image: linear-gradient(to right, #262D3A 60%, transparent 0%);
+  background-size: 10px 1px;
+  background-repeat: repeat-x;
+}
+
+.rail-progress { display: flex; align-items: center; gap: 4px; width: 100%; }
+
+.rail-progress__segment {
+  flex: 1 1 0;
+  height: 5px;
+  border-radius: 2px;
+  background-color: #1E2430;
+  position: relative;
+  overflow: hidden;
+}
+
+.rail-progress__segment--done { background-color: #6B7A8F; }
+.rail-progress__segment--active { background-color: #2B8CB0; }
+
+.rail-progress__segment--active::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+  animation: railSweep 1.6s ease-in-out infinite;
+}
+
+@keyframes railSweep {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Sidebar menu */
+.custom-enterprise-menu .ant-menu-item {
+  color: #A8B1C2 !important;
+  font-weight: 500 !important;
+  margin-block: 2px !important;
+  border-radius: 6px !important;
+  transition: all 0.2s ease !important;
+}
+
+.custom-enterprise-menu .ant-menu-item .anticon {
+  color: #A8B1C2 !important;
+  font-size: 16px !important;
+  transition: color 0.2s ease !important;
+}
+
+.custom-enterprise-menu .ant-menu-item:hover {
+  color: #F4F6F9 !important;
+  background-color: #1C222D !important;
+}
+
+.custom-enterprise-menu .ant-menu-item:hover .anticon {
+  color: #F4F6F9 !important;
+}
+
+.custom-enterprise-menu .ant-menu-item-selected {
+  color: #2B8CB0 !important;
+  background-color: rgba(43, 140, 176, 0.14) !important;
+  font-weight: 600 !important;
+  position: relative;
+}
+
+.custom-enterprise-menu .ant-menu-item-selected::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 8px;
+  bottom: 8px;
+  width: 3px;
+  background-color: #2B8CB0;
+  border-radius: 3px 0 0 3px;
+}
+
+.custom-enterprise-menu .ant-menu-item-selected .anticon {
+  color: #2B8CB0 !important;
+}
+
+/* Assistant floating trigger */
+.gmao-assistant-btn {
+  width: 56px !important;
+  height: 56px !important;
+  border-radius: 10px !important;
+  background: #2B8CB0 !important;
+  color: #0D1117 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5) !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.gmao-assistant-btn:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.6) !important;
+}
+
+@media print {
+  body * { visibility: hidden; }
+  #printable-certificate, #printable-certificate * { visibility: visible; }
+  #printable-certificate {
+    position: absolute; left: 0; top: 0; width: 100%; margin: 0; padding: 0;
+  }
+}
+.ant-alert-error .ant-alert-message,
+.ant-alert-error .ant-alert-description {
+  color: #FCA5A0 !important;
+}
+.ant-alert-success .ant-alert-message { color: #86E5C0 !important; }
+.ant-alert-warning .ant-alert-message { color: #F0C77A !important; }
+.ant-form-item-explain-error {
+  color: #FCA5A0 !important;
+}

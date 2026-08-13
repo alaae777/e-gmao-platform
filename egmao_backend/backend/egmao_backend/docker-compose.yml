@@ -1,0 +1,15 @@
+# Local development database only (not a production deployment file).
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: egmao
+      POSTGRES_USER: egmao
+      POSTGRES_PASSWORD: egmao
+    ports:
+      - "5432:5432"
+    volumes:
+      - egmao_pgdata:/var/lib/postgresql/data
+
+volumes:
+  egmao_pgdata:
