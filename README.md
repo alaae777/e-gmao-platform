@@ -34,14 +34,15 @@ vérifiables à l'issue de chaque formation complétée.
 
 ## Aperçu
 
-🔲 **À compléter :** captures d'écran (page d'accueil publique, catalogue,
-lecteur de module, quiz, certificat, back-office admin).
+ Espace employé 
+ <img width="1333" height="588" alt="image" src="https://github.com/user-attachments/assets/5d6082c2-d7de-41cf-9c4c-8ced9f8289d0" />
 
-| Espace public | Espace employé | Back-office admin |
-|---|---|---|
-| `[capture]` | `[capture]` | `[capture]` |
+ 
+ Back-office admin 
 
----
+<img width="1349" height="493" alt="image" src="https://github.com/user-attachments/assets/74f5f7cb-132f-4faf-b544-ea2ff526a87f" />
+
+
 
 ## Architecture générale
 
@@ -90,10 +91,7 @@ L'application suit une architecture classique **API + SPA découplées** :
 - Architecture RAG (Retrieval-Augmented Generation)
 - Fournisseur configurable : Ollama (local, par défaut), OpenAI, ou Gemini
 
-🔲 **À compléter :** versions exactes des dépendances si vous voulez les
-figer dans le README (sinon `requirements.txt` / `package.json` font foi).
 
----
 
 ## Conception fonctionnelle
 
@@ -110,6 +108,27 @@ Deux rôles : **Administrateur** et **Employé**.
      Employé** côté serveur, quoi que le client envoie.
 - Les tokens JWT expirent et se rafraîchissent automatiquement
   (`ACCESS_TOKEN_LIFETIME` / `REFRESH_TOKEN_LIFETIME` configurables).
+  
+  ### Administration
+
+L'administrateur dispose d'un espace dédié permettant de gérer le contenu
+et les utilisateurs de la plateforme.
+
+Il peut notamment :
+
+- gérer les utilisateurs et leurs rôles ;
+- créer et modifier les catégories ;
+- créer et modifier les formations ;
+- gérer les modules et leur ordre ;
+- gérer les chapitres et leur contenu ;
+- ajouter les documents et vidéos associés aux chapitres ;
+- créer les quiz ;
+- gérer les questions et les choix de réponse ;
+- consulter et gérer les différents éléments de formation depuis le
+  back-office.
+
+L'accès aux fonctionnalités d'administration est protégé par le système
+d'autorisation basé sur le rôle de l'utilisateur.
 
 ### Catalogue de formation
 
@@ -138,20 +157,23 @@ Catégorie
 
 ```
 Quiz (1 par module)
- └─ Question (plusieurs)
-     └─ Choix de réponse (plusieurs, 1 ou plusieurs corrects)
+ └─ 5 Questions
+     └─ Choix de réponse (1 correcte)
 ```
 
 - Les employés ne voient jamais `is_correct` avant d'avoir soumis leurs
   réponses (sérialiseur public distinct du sérialiseur admin).
 - Chaque tentative (`QuizAttempt`) est historisée avec le score obtenu.
+- 
+### Règles de progression
 
-### Progression
-
-- La progression (`Progress`) est calculée par formation, en pourcentage
-  de modules validés.
-- Le passage à 100% déclenche automatiquement la génération d'un
-  certificat (voir ci-dessous) — aucune action manuelle requise.
+- Les chapitres sont suivis dans l'ordre défini par le module.
+- La validation d'un chapitre permet de poursuivre le parcours.
+- Le quiz d'un module devient accessible lorsque les conditions
+  de progression du module sont remplies.
+- Un score minimum de 50 % est requis pour valider un quiz.
+- La validation de l'ensemble des modules d'une formation permet
+  d'atteindre 100 % de progression et de générer le certificat.
 
 ### Certificats
 
@@ -178,6 +200,19 @@ Certificat existe déjà pour (user, training) ?
 Création du certificat      Rien à faire
 + notification employé
 ```
+## Sécurité
+
+La plateforme met en place plusieurs mécanismes de sécurité :
+
+- authentification par JWT ;
+- séparation des droits entre administrateur et employé ;
+- protection des routes privées côté frontend et backend ;
+- contrôle du rôle utilisateur côté serveur ;
+- séparation des données publiques et privées ;
+- les réponses des quiz destinées aux employés ne contiennent pas
+  les réponses correctes avant la soumission ;
+- les informations sensibles sont stockées dans les variables
+  d'environnement et ne doivent pas être versionnées.
 
 ### Assistant IA
 
@@ -189,10 +224,7 @@ Création du certificat      Rien à faire
   (derniers échanges seulement) pour garder des temps de réponse
   raisonnables.
 
-🔲 **À compléter :** détail du pipeline RAG si vous voulez le documenter
-plus finement (source des embeddings, base vectorielle utilisée, etc.).
 
----
 
 ## Système de design
 
@@ -207,10 +239,6 @@ plus finement (source des embeddings, base vectorielle utilisée, etc.).
   centralisés dans `src/theme.js` et injectés dans Ant Design via
   `ConfigProvider`.
 
-🔲 **À compléter :** capture de la palette / de la charte si vous voulez
-l'illustrer visuellement ici.
-
----
 
 ## Structure du dépôt
 
@@ -237,19 +265,14 @@ egmao/
         └── index.html
 ```
 
-🔲 **À compléter :** ajustez si votre arborescence réelle diverge
-(certains dossiers ont été observés via zip, à vérifier contre votre repo
-actuel).
-
----
 
 ## Installation
 
 ### Prérequis
-- Python 3.11+
+- Python 3.14.2
 - Node.js 18+
 - PostgreSQL 14+
-- (optionnel) Ollama, si vous utilisez l'assistant IA en local
+-  Ollama 0.32.6
 
 ### Backend
 
@@ -271,10 +294,7 @@ npm install
 npm run dev
 ```
 
-🔲 **À compléter :** commandes de build/déploiement en production si
-différentes (Docker, CI/CD, etc.).
 
----
 
 ## Variables d'environnement
 
@@ -294,16 +314,11 @@ différentes (Docker, CI/CD, etc.).
 | `OPENAI_API_KEY` / `GEMINI_API_KEY` | Clés API, si fournisseur cloud utilisé | — |
 | `RAG_TOP_K` | Nombre d'extraits injectés dans le contexte RAG | `4` |
 
-🔲 **À compléter :** valeurs réelles pour votre environnement de
-production (ne pas les committer, bien sûr — ce tableau documente juste
-le rôle de chaque variable).
 
----
 
 ## API — vue d'ensemble
 
-🔲 **À compléter :** générer/lier une doc OpenAPI (`drf-spectacular` ou
-équivalent) si vous en avez une, ou lister ici les endpoints principaux.
+
 
 | Ressource | Endpoint | Notes |
 |---|---|---|
@@ -315,18 +330,4 @@ le rôle de chaque variable).
 | Vérification certificat | `GET /api/progress/certificates/verify/<number>/` | public, sans auth |
 | Assistant | `POST /api/assistant/...` | — |
 
----
 
-## Roadmap
-
-🔲 **À compléter :** vos priorités actuelles / prochaines fonctionnalités.
-
-- [ ] …
-- [ ] …
-
----
-
-## Équipe & licence
-
-🔲 **À compléter :** auteurs/contributeurs, licence du projet (interne,
-propriétaire, MIT, etc.), contact.
