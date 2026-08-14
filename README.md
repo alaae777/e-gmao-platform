@@ -164,7 +164,7 @@ Quiz (1 par module)
 - Les employés ne voient jamais `is_correct` avant d'avoir soumis leurs
   réponses (sérialiseur public distinct du sérialiseur admin).
 - Chaque tentative (`QuizAttempt`) est historisée avec le score obtenu.
-- - Le score minimum de validation est **configurable par quiz** (champ
+-  Le score minimum de validation est **configurable par quiz** (champ
   "Score minimal" côté admin), 50 % par défaut si non renseigné.
 ### Règles de progression
 
