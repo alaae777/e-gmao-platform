@@ -27,8 +27,7 @@ vérifiables à l'issue de chaque formation complétée.
 - [Installation](#installation)
 - [Variables d'environnement](#variables-denvironnement)
 - [API — vue d'ensemble](#api--vue-densemble)
-- [Roadmap](#roadmap)
-- [Équipe & licence](#équipe--licence)
+
 
 ---
 
@@ -223,7 +222,29 @@ La plateforme met en place plusieurs mécanismes de sécurité :
 - L'historique de conversation envoyé au modèle est volontairement limité
   (derniers échanges seulement) pour garder des temps de réponse
   raisonnables.
+### Pipeline RAG
 
+L'assistant repose actuellement sur une architecture RAG minimale permettant
+d'utiliser le contenu des formations comme contexte lors de la génération
+des réponses.
+
+| Étape | Implémentation actuelle |
+|---|---|
+| **Source** | Documents du catalogue, principalement PDF. Les documents sont associés aux chapitres de formation. |
+| **Extraction** | `pypdf` pour les fichiers PDF et `python-docx` pour les fichiers `.docx`. |
+| **Découpage (chunking)** | Découpage en chunks de 800 caractères avec un chevauchement de 100 caractères. Les chunks sont stockés en base dans `DocumentChunk`. |
+| **Indexation** | Commande Django `python manage.py index_documents`, qui extrait, découpe et enregistre les contenus des documents. |
+| **Recherche (retrieval)** | Recherche actuelle basée sur le recouvrement de mots-clés entre la question et les chunks. Les `RAG_TOP_K` meilleurs résultats sont sélectionnés. |
+| **Filtrage contextuel** | Lorsque l'assistant est ouvert depuis un chapitre précis, la recherche peut être limitée aux documents associés à ce chapitre. |
+| **Génération** | Les extraits sélectionnés sont transmis au fournisseur LLM configuré afin de générer la réponse. |
+| **Traçabilité** | Les messages de l'assistant conservent les identifiants des chunks utilisés dans `sources`. |
+
+Cette première version privilégie une architecture simple, locale et facile
+à maintenir, sans service externe dédié à la recherche documentaire.
+
+Une évolution possible consiste à remplacer le scoring par mots-clés par une
+recherche sémantique utilisant des embeddings et une solution de recherche
+vectorielle telle que `pgvector` ou FAISS.
 
 
 ## Système de design
