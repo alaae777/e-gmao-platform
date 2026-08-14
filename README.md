@@ -27,6 +27,7 @@ vérifiables à l'issue de chaque formation complétée.
 - [Installation](#installation)
 - [Variables d'environnement](#variables-denvironnement)
 - [API — vue d'ensemble](#api--vue-densemble)
+- licence
 
 
 ---
@@ -350,5 +351,8 @@ npm run dev
 | Progression | `GET /api/progress/...` | — |
 | Vérification certificat | `GET /api/progress/certificates/verify/<number>/` | public, sans auth |
 | Assistant | `POST /api/assistant/...` | — |
+
+## licence
+Licence. Projet à usage interne exclusivement, réservé aux employés du département concerné au sein de l'entreprise. Pas de distribution ni de réutilisation externe.
 
 
