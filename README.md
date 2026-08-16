@@ -49,17 +49,7 @@ vérifiables à l'issue de chaque formation complétée.
 L'application suit une architecture classique **API + SPA découplées** :
 
 ```
-┌─────────────────────┐        HTTPS / JSON        ┌──────────────────────────┐
-│   Frontend (React)   │ ─────────────────────────► │   Backend (Django REST)  │
-│   Vite + Ant Design   │ ◄───────────────────────── │   PostgreSQL             │
-└─────────────────────┘        JWT (access/refresh)  └──────────────────────────┘
-                                                              │
-                                                              ▼
-                                                    ┌──────────────────────┐
-                                                    │  Assistant IA (RAG)  │
-                                                    │  Ollama / OpenAI /   │
-                                                    │  Gemini (swappable)  │
-                                                    └──────────────────────┘
+<img width="1800" height="1600" alt="architecture_generale (1)" src="https://github.com/user-attachments/assets/cc83ae77-c83a-4dea-8268-c714aef1d28a" />
 ```
 
 - Le frontend ne connaît que l'API REST — aucune logique métier côté client
