@@ -48,10 +48,8 @@ vérifiables à l'issue de chaque formation complétée.
 
 L'application suit une architecture classique **API + SPA découplées** :
 
-```
 <img width="424" height="520" alt="image" src="https://github.com/user-attachments/assets/86465790-96e6-4ba3-9471-66a5447ab87c" />
 
-```
 
 - Le frontend ne connaît que l'API REST — aucune logique métier côté client
   au-delà de l'affichage et de la navigation.
